@@ -14,22 +14,22 @@ pipeline {
 
     stage('build') {
       steps {
-        sh 'docker build -t final-python:$BUILD_ID .'
+        sh 'docker build -t finPy:$BUILD_ID .'
       }
     }
 
     stage('run & test') {
       steps {
-        sh 'docker run -itd -p 5000:5000 --name final-python final-python:$BUILD_ID'
+        sh 'docker run -itd -p 5000:5000 --name finPy finPy:$BUILD_ID'
         sleep 3
         sh 'curl localhost:5000'
-        sh 'docker stop final-python && docker rm final-python'
+        sh 'docker stop finPy && docker rm finPy'
       }
     }
 
     stage('push') {
       steps {
-        sh 'docker tag final-python:$BUILD_ID anasshwi/final-python:$BUILD_ID'
+        sh 'docker tag finPy:$BUILD_ID anasshwi/final-python:$BUILD_ID'
         sh 'docker login -u anasshwi -p Anas123456'
         sh 'docker push anasshwi/final-python:$BUILD_ID'
       }
