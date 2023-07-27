@@ -20,7 +20,7 @@ pipeline {
 
     stage('run & test') {
       steps {
-        sh 'docker run --name final-python -d -p 5000:5000 final-python:$BUILD_ID'
+        sh 'docker run -itd -p 5000:5000 --name final-python final-python:$BUILD_ID'
         sleep 3
         sh 'curl localhost:5000'
         sh 'docker stop final-python && docker rm final-python'
